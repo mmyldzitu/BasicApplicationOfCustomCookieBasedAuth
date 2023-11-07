@@ -12,6 +12,12 @@ namespace CustomCookieBased.Configuration
     {
         public void Configure(EntityTypeBuilder<AppUser> builder)
         {
+            builder.HasData(new AppUser()
+            {
+                Id = 1,
+                userName = "mmy",
+                Password = "1"
+            });
             builder.Property(x => x.Password).HasMaxLength(200).IsRequired();
             builder.Property(x => x.userName).HasMaxLength(250).IsRequired();
         }
@@ -20,6 +26,12 @@ namespace CustomCookieBased.Configuration
         {
             public void Configure(EntityTypeBuilder<AppRole> builder)
             {
+                builder.HasData(new AppRole()
+                {
+                    Id = 1,
+                    Definition = "Admin"
+
+                });
                 builder.Property(x => x.Definition).HasMaxLength(200).IsRequired();
             }
 
@@ -28,6 +40,11 @@ namespace CustomCookieBased.Configuration
         {
             public void Configure(EntityTypeBuilder<AppUserRole> builder)
             {
+                builder.HasData(new AppUserRole()
+                {
+                    roleId = 1,
+                    userID = 1
+                });
                 builder.HasKey(x => new { x.userID, x.roleId });
                 builder.HasOne(x => x.AppRole).WithMany(y => y.userRoles).HasForeignKey(x => x.roleId);
                 builder.HasOne(x => x.AppUser).WithMany(x => x.userRoles).HasForeignKey(x => x.userID);
