@@ -1,0 +1,29 @@
+﻿@model UserSignInModel
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Custom Cookie Based Sign In</title>
+    <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div>
+        <form method="post" asp-action="SignIn" asp-controller="Home">
+            <div class="form-control">
+                <label>Kullanıcı Adı:</label>
+                <input type="text"  asp-for="userName" />
+            </div>
+            <div class="form-control">
+                <label>Şifre:</label>
+                <input type="password"  asp-for="Password" />
+            </div>
+            <div>
+                <label>Remember Me:</label>
+                <input type="checkbox"  asp-for="rememberMe" />
+            </div>
+            <button class="btn btn-outline-primary">Giriş Yap</button>
+        </form>
+    </div>
+    
+
+
+</body>
+</html>

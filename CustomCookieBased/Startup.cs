@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -29,6 +31,9 @@ namespace CustomCookieBased
                 opt.Cookie.SameSite = SameSiteMode.Strict;
                 opt.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
                 opt.ExpireTimeSpan = TimeSpan.FromDays(10);
+                opt.LoginPath = new PathString("/Home/SignIn");
+                opt.LogoutPath = new PathString("/Home/LogOut");
+                opt.AccessDeniedPath = new PathString("/Home/AccessDenied");
             
             });
             services.AddControllersWithViews();
@@ -41,6 +46,12 @@ namespace CustomCookieBased
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                RequestPath = "/node_modules",
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "node_modules"))
+
+            });
 
             app.UseRouting();
             app.UseAuthentication();
